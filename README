@@ -1,6 +1,9 @@
 README:wbbd
 
-wbbd is a little SSH rmeote access script that fetches a URL, and 
-upon success will run SSH with a remote port forward. 
+"Web Based BackDoor" (wbbd) is a little SSH remote access script that fetches a URL, and 
+upon successful read,  will run SSH with a remote port forward to a server of your choice. 
 
-Fun right? 
+Obviously, you can use this remote port forward to enable SSH access across network boundaries. 
+
+Have fun!
+
