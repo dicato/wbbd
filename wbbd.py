@@ -38,8 +38,9 @@ def validateParameters(options):
 
     validHostnameRegex = "^(([a-zA-Z]|[a-zA-Z][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z]|[A-Za-z][A-Za-z0-9\-]*[A-Za-z0-9])$"
 
-    if not re.match(validIpAddressRegex, options.host) or re.match(validHostnameRegex, options.host):
-        print "host appears to not be a valid host, exiting."
+    if not re.match(validIpAddressRegex, options.host) and  not re.match(validHostnameRegex, options.host):
+        print "Supplied host: %s" % options.host
+        print "Host appears to not be a valid host, exiting."
         sys.exit(1)
 
     #If we made it this far, we can return True
@@ -52,7 +53,7 @@ def popShell(identity, rport, lport, port, username, host):
     """
 
     #TODO: Probably should not redirect stdout and stderr so forcefully. Let Popen handle it.
-    cmd = "ssh -f -i %s -R %s:127.0.0.1:%s -p %s -l %s %s 'nice top -b -u 2' > /dev/null 2>&1 &" % \
+    cmd = "ssh -N -i %s -R %s:127.0.0.1:%s -p %s -l %s %s  > /dev/null 2>&1 &" % \
         (identity, rport, lport, port, username, host)
 
     x = subprocess.Popen(cmd, shell=True)
