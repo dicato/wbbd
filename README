@@ -1,0 +1,6 @@
+README:wbbd
+
+wbbd is a little SSH rmeote access script that fetches a URL, and 
+upon success will run SSH with a remote port forward. 
+
+Fun right? 
