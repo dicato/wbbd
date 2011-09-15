@@ -68,6 +68,21 @@ def validateParameters(options):
     #If we made it this far, we can return True
     return True
     
+def currentlyRunning(cmd):
+    """
+    Who needs documentation...
+    TODO: Add some...
+    """
+    
+    s = "ps -elf | grep \"%s\" | grep -v grep | wc -l" % cmd[0:10]
+    x = subprocess.Popen(s, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    out, err = x.communicate()
+
+    if int(out.strip()):
+        return True
+    
+    return False
+    
 def popShell(identity, rport, lport, port, username, host):
     """
     Who needs documentation...
@@ -78,7 +93,13 @@ def popShell(identity, rport, lport, port, username, host):
     cmd = "ssh -N -i %s -R %s:127.0.0.1:%s -p %s -l %s %s  > /dev/null 2>&1 &" % \
         (identity, rport, lport, port, username, host)
 
-    x = subprocess.Popen(cmd, shell=True)
+    #Check to see if cmd is already running
+    if not currentlyRunning(cmd):
+        print "Trying to open a new SSH session..."
+        x = subprocess.Popen(cmd, shell=True)
+    
+    else:
+        print "SSH with those parameters already running..."
 
 def fetchPage(url):
     """
@@ -153,7 +174,7 @@ if __name__ == "__main__":
             print "Parameters look good, fetching url..."
             
             if fetchPage(options.url):
-                print "Got the page, trying to SSH..."
+                print "Fetched page, trying to SSH..."
                 popShell(options.identity, options.rport, options.lport, \
                              options.port, options.user, options.host)
 
