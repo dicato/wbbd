@@ -90,8 +90,8 @@ def popShell(identity, rport, lport, port, username, host):
     """
 
     #TODO: Probably should not redirect stdout and stderr so forcefully. Let Popen handle it.
-    cmd = "ssh -N -i %s -R %s:127.0.0.1:%s -p %s -l %s %s  > /dev/null 2>&1 &" % \
-        (identity, rport, lport, port, username, host)
+    cmd = "ssh -R %s:127.0.0.1:%s -i %s -p %s -l %s %s -N  > /dev/null 2>&1 &" % \
+        (rport, lport, identity, port, username, host)
 
     #Check to see if cmd is already running
     if not currentlyRunning(cmd):
