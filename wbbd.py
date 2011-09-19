@@ -161,12 +161,12 @@ if __name__ == "__main__":
     if not options.url:
         print "URL is a mandatory option!"
         print "See help for more information. \n"
-        print options.help
+        parser.print_help()
 
     elif not options.identity or not options.user or not options.host:
         print "Identity, user, and host are currently all mandatory options!"
         print "See help for more information.\n"
-        print options.help
+        parser.print_help()
 
     else:
         #Then really validate some args for data
